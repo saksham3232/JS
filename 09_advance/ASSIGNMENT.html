@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(to right, #8360c3, #2ebf91);
+            color: #fff;
+        }
+
+        #button {
+            background-color: #2ebf91;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #button:hover {
+            background-color: #1e8b6b;
+        }
+
+        .card {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            color: #333;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            padding: 20px;
+            margin-top: 20px;
+            overflow: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .card.active {
+            display: flex;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .card_content {
+            text-align: center;
+        }
+
+        .card_content h2 {
+            margin: 10px 0;
+            font-size: 24px;
+            color: #2ebf91;
+        }
+
+        .card_content p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <button id="button">Click To See Info</button>
+    <div class="card" id="imageCard">
+        <img src="" alt="Avatar Image">
+        <div class="card_content">
+            <h2>Card Image</h2>
+            <p>Image Summary</p>
+        </div>
+    </div>
+</body>
+<script>
+    document.querySelector('#button').addEventListener('click', function() {
+        const requestUrl = 'https://api.github.com/users/hiteshchoudhary';
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', requestUrl);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const data = JSON.parse(this.responseText);
+                const cardContainer = document.getElementById("imageCard");
+                cardContainer.classList.add('active');
+                cardContainer.querySelector('img').src = data.avatar_url;
+                const follower = document.querySelector(".card_content h2");
+                follower.textContent = `Followers: ${data.followers}`;
+                const linkedinUrl = document.querySelector('.card_content p');
+                linkedinUrl.textContent = data.blog || "No Blog Available";
+            }
+        };
+        xhr.send();
+    });
+</script>
+</html>
