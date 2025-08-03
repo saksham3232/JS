@@ -82,10 +82,4 @@ Feel free to open issues or pull requests for improvements, bug fixes, or new tu
 
 ---
 
-## 📄 License
-
-This repository is open source and available under the [MIT License](LICENSE).
-
----
-
 Happy Coding! 🚀
